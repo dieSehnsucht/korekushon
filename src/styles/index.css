@@ -1,0 +1,187 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #6fcf6f; /* green links */
+  text-decoration: inherit;
+}
+a:hover {
+  color: #52b152; /* darker green on hover */
+}
+
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+
+h1 {
+  font-size: 2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #52b152; /* green hover */
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/* App shell layout */
+.app-shell { display: flex; flex-direction: column; height: 100vh; width: 100%; background:#1c1c1c; color:#e8e8e8; }
+.app-header { display:flex; align-items:center; gap:10px; padding:6px 10px; border-bottom:1px solid #2b2b2b; }
+.sidebar-toggle {  color:#e8e8e8; padding:6px; border-radius:6px; }
+.sidebar-toggle svg { width:20px; height:20px; }
+.spacer { flex:1 }
+.auth-btn, .user-chip, .logout-btn { background:#2b2b2b; color:#e8e8e8; height:34px; padding:0 10px; display:inline-flex; align-items:center; border-radius:6px }
+.user-chip { font-size:0.95em }
+.user-menu { position:relative; }
+.user-menu-dropdown { position:absolute; right:0; top:calc(100% + 6px); background:#2b2b2b; border:1px solid #3a3a3a; border-radius:6px; padding:6px; z-index:10; min-width:140px }
+.user-menu-dropdown button { width:100%; text-align:left; padding:8px 10px; height:34px; display:inline-flex; align-items:center; border-radius:4px; background:transparent; border:1px solid transparent }
+.user-menu-dropdown button:hover { background:#2d5016; color:#e8e8e8 }
+
+.app-body { display:flex; flex:1; overflow:hidden }
+.app-sidebar { width: 20%; min-width: 220px; max-width: 320px; border-right:1px solid #2b2b2b; overflow:auto }
+.app-content { flex:1; padding:16px; overflow:auto }
+.app-shell.sidebar-collapsed .app-sidebar { transform: translateX(-100%); }
+.app-shell.sidebar-collapsed .app-content { padding-left: 16px; }
+.app-body { position: relative; display:flex; flex:1; overflow:hidden }
+/* Content 永远占满 */
+.app-content { flex:1; padding:16px; overflow:auto; position:relative; z-index:0 }
+
+/* Overlay Sidebar：默认隐藏，打开后覆盖 80% 宽度 */
+.app-sidebar { 
+  position: fixed; /* cover header and full viewport */
+  top: 0; left: 0; bottom: 0; 
+  height: 100vh;
+  width: 60%; 
+  max-width: none;
+  min-width: 0;
+  background:#1f1f1f; 
+  border-right:1px solid #2b2b2b; 
+  overflow:auto; 
+  transform: translateX(-100%);
+  transition: transform .25s ease, width .25s ease, min-width .25s ease, max-width .25s ease;
+  z-index: 100; /* higher so it covers header */
+}
+.app-sidebar.open { transform: translateX(0); }
+
+/* Desktop: keep sidebar always visible and as 20% of page width */
+@media (min-width: 900px) {
+  .sidebar-toggle { display: none; }
+  .sidebar-backdrop { display: none; }
+  .app-sidebar {
+    position: fixed; /* full-height fixed sidebar starting at top */
+    top: 0; left: 0; bottom: 0;
+    height: 100vh;
+    transform: none !important;
+    transition: none !important;
+    width: 20%;
+    min-width: 220px;
+    max-width: 320px;
+    z-index: 100;
+    padding-top: 0; /* ensure no gap at top */
+  }
+  /* shift header and content to the right so they don't overlap the fixed sidebar */
+  .app-header { padding-left: calc(20% + 10px); }
+  .app-content { margin-left: 20%; }
+  /* ensure collapsed state doesn't hide sidebar on desktop */
+  .app-shell.sidebar-collapsed .app-sidebar { transform: none; }
+  .app-shell.sidebar-collapsed .app-content { padding-left: 0; }
+}
+
+/* 遮罩层 */
+.sidebar-backdrop {
+  position:absolute; inset:0; background:rgba(0,0,0,.4); z-index:1;
+}
+.sidebar-toggle {  color:#ffffff; display:inline-flex; align-items:center; justify-content:center; }
+.n-button__content { display:inline-flex; align-items:center; justify-content:center; }
+.n-icon { display:inline-flex; line-height:0 }
+
+/* Sidebar */
+.sidebar { padding: 12px }
+.sidebar-header { display:flex; align-items:center; justify-content:space-between; }
+.sidebar-list { list-style:none; padding:0; margin:8px 0 0 0; display:flex; flex-direction:column; gap:4px }
+.sidebar-list li button { width:100%; text-align:left; background:#2b2b2b; color:#e8e8e8 }
+.sidebar-list li.active button { background:#2d5016; color:#e8e8e8 }
+.muted { opacity: .7;font-size: 0.6em; }
+
+/* Content */
+.content-wrap { display:flex; flex-direction:column; gap:12px }
+.content-header { display:flex; align-items:center; justify-content:space-between }
+.links-list { margin:0; padding-left: 20px }
+.link-item { margin-bottom: 12px }
+.link-row .index { margin-right: 6px; color:#9aa0a6 }
+
+/* Comments */
+
+
+/* Modal */
+.modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.5); display:flex; align-items:center; justify-content:center; z-index:1000 }
+.modal { width: 420px; max-width: calc(100vw - 32px); background:#2b2b2b; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:10px; overflow:hidden }
+.modal-header { display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-bottom:1px solid #3a3a3a }
+.modal-body { padding:12px; display:flex; flex-direction:column; gap:10px }
+.modal-footer { padding:10px 12px; border-top:1px solid #3a3a3a; display:flex; gap:8px; align-items:center }
+.form-row { display:flex; flex-direction:column; gap:6px }
+.form-row input { background:#1f1f1f; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:6px; padding:8px }
+.message { color:#9aa0a6 }
+.modal .link { background:transparent; border-color:transparent; color:#9aa0a6 }
+.modal .close { background:#3a3a3a }
+
+/* Global footer: fixed at bottom, two lines stacked and vertically centered */
+.global-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(20,20,20,0.9);
+  border-top: 1px solid #2b2b2b;
+  color: #cbd5dd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  gap: 2px;
+  z-index: 900;
+  font-size: 0.9em;
+}
+.global-footer .footer-up-time { font-weight: 600; color: #e8e8e8 }
+.global-footer .footer-copyright { color: #9aa0a6 }
+
+/* Add bottom padding to app content so it doesn't sit behind the footer */
+.app-content { padding-bottom: 64px }

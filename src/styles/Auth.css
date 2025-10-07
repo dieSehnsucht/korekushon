@@ -1,0 +1,31 @@
+/* Auth modal and tab styles */
+.modal input, .modal textarea { outline: none }
+
+/* Tabs in modal header */
+.auth-tabs { display:flex; gap:40px; align-items:center; justify-content:center; width:100% }
+.auth-tab { background:transparent; border:0; color:#d7d7d7; padding:12px 8px; font-size:1.15rem; cursor:pointer }
+.auth-tab.active { color:#6fcf6f; position:relative; font-weight:700 }
+.auth-tab.active::after { content:''; position:absolute; left:10%; right:10%; bottom:-12px; height:4px; background:#6fcf6f; border-radius:4px }
+
+/* Modal body spacing */
+.modal-body { padding:18px 20px; display:flex; flex-direction:column; gap:16px }
+.form-row label { font-size:0.95rem; color:#9aa0a6 }
+.form-row input { background:#141414; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:12px; padding:18px; font-size:1rem }
+
+.footer-links { display:flex; gap:12px; align-items:center; justify-content:flex-end; flex:1 }
+.footer-links .link { background:transparent; border:0; color:#6fcf6f; cursor:pointer; font-weight:600 }
+
+.modal-footer { display:flex; align-items:center; gap:12px; padding:16px 20px }
+.modal-footer .primary { background:#6fcf6f; color:#07130a; border:0; padding:16px 24px; border-radius:12px; font-size:1.15rem; width:100%; font-weight:700 }
+.modal-footer .primary[disabled] { opacity:0.6 }
+
+.modal { width: 480px; max-width: calc(100vw - 32px); background:#141414; color:#e8e8e8; border:1px solid #2b2b2b; border-radius:14px; overflow:hidden }
+.modal-header { display:flex; align-items:flex-end; justify-content:center; padding:18px 20px; border-bottom:1px solid #222; position:relative }
+
+.modal .close { position:absolute; right:14px; top:12px; }
+
+.modal .close { background:transparent; border:0; color:#cfcfcf; font-size:1.2rem }
+
+.forgot-row { display:flex; justify-content:flex-end }
+.forgot-row .link { color:#6fcf6f; font-weight:700 }
+

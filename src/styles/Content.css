@@ -1,0 +1,19 @@
+/* Additional Content tweaks - optional */
+.links-list a{ color:#6fcf6f }
+.links-list a:hover{ color:#52b152 }
+
+/* Add link form */
+.add-link-form { display:flex; gap:8px; align-items:flex-end; margin-bottom:12px; padding:12px; background:#2b2b2b; border-radius:6px; }
+.add-link-form input { flex:1; background:#1f1f1f; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:4px; padding:8px; }
+.add-link-form input:focus { outline:2px solid #52b152; }
+.add-link-form button { background:#6fcf6f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; }
+.add-link-form button:hover { background:#52b152; }
+.add-link-form button:last-child { background:#3a3a3a; }
+.add-link-form button:last-child:hover { background:#4a4a4a; }
+
+/* Comment toggle */
+.comment-toggle { background:#2b2b2b; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:4px; padding:4px 8px; cursor:pointer; }
+.comment-toggle:hover { background:#3a3a3a; }
+
+.link-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.link-item .link-meta { margin-left:22px; margin-top:2px; display:block; font-size:0.75rem; }

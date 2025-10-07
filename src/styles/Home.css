@@ -31,7 +31,7 @@ body{
 	color:var(--text);
 }
 
-.page-root{min-height:100vh;display:flex;flex-direction:column;gap:24px;padding:32px;width:100%;max-width:900px;align-items:center;justify-content:center}
+.page-root{min-height:100vh;display:flex;flex-direction:column;gap:24px;padding:32px;width:100%;align-items:flex-start;justify-content:flex-start}
 
 .profile{display:flex;align-items:center;justify-content:center;padding:20px;background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06);width:100%;max-width:720px}
 .profile-info.centered{display:flex;flex-direction:column;align-items:center;text-align:center}

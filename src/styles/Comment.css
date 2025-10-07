@@ -1,0 +1,36 @@
+/* Styles specific to the Comment component */
+.comment .toggle { background:#2b2b2b; margin-top:6px }
+.comment-panel { border-left:2px solid #3a3a3a; margin-top:6px; padding-left:10px }
+.comment-input { display:flex; gap:6px; align-items:flex-end }
+.comment-input textarea { flex:1; min-height:60px; background:#1f1f1f; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:6px; padding:6px }
+.comment-list { list-style:none; padding:0; margin:8px 0 0 0; display:flex; flex-direction:column; gap:8px }
+.comment-row { margin-bottom: 12px }
+.comment-box { background:#2b2b2b; border:1px solid #3a3a3a; border-radius:6px; padding:12px; margin-left:0; display:flex; flex-direction:column; gap:12px }
+.comment-grid { display:grid; width: 100%; grid-template-columns: 1fr; gap:12px; align-items:start; margin-left:0 }
+.meta-col { display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; }
+.meta-col .author { color:#e8e8e8; font-weight:bold; margin-bottom:0px }
+.body-col { margin-left: 0px; display:flex; flex-direction:column; align-items:flex-start }
+.body-header { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:6px }
+.body-header .time { color:#9aa0a6; white-space:nowrap }
+.comment-row .content { margin-left: 0px; color:#e8e8e8; background:#1f1f1f; padding:8px; border-radius:4px; text-align:left; width:100%; display:block }
+.comment-toolbar { display:flex; align-items:center; gap:8px }
+.comment-toolbar .reply { background:#214d2d; border-color:#2f6c41; padding:6px 12px }
+.comment-toolbar .delete { background:#552222; border-color:#663333; padding:6px 12px; margin-left:auto }
+.reply-form { margin:8px 0 0 16px; display:flex; flex-direction:column; gap:6px }
+.reply-form textarea { width:100%; min-height:50px; background:#1f1f1f; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:6px; padding:6px }
+.reply-actions { display:flex; justify-content:flex-end; gap:8px }
+.reply-actions button { padding:6px 12px }
+.comment-children { list-style:none; margin:12px 0 0 16px; padding-left:16px; border-left:2px solid #3a3a3a; display:flex; flex-direction:column; gap:12px }
+.comment-empty { padding:16px; text-align:center; background:#1f1f1f; border-radius:6px }
+.comment-loading { display:flex; flex-direction:column; gap:12px; padding:12px 0 }
+.skeleton-row { display:flex; gap:12px; align-items:flex-start }
+.skeleton-avatar { width:32px; height:32px; border-radius:50%; background:linear-gradient(90deg,#2a2a2a 0%,#353535 50%,#2a2a2a 100%); background-size:200% 100%; animation:skeleton-pulse 1.6s ease-in-out infinite }
+.skeleton-content { flex:1; display:flex; flex-direction:column; gap:8px }
+.skeleton-line { height:12px; border-radius:6px; background:linear-gradient(90deg,#2a2a2a 0%,#353535 50%,#2a2a2a 100%); background-size:200% 100%; animation:skeleton-pulse 1.6s ease-in-out infinite }
+.skeleton-line.short { width:120px }
+.comment-refresh { margin:8px 0; font-size:12px }
+
+@keyframes skeleton-pulse {
+	0% { background-position:200% 0 }
+	100% { background-position:-200% 0 }
+}

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { supabase, fetchCommentsOverview, type Comment as CommentRow } from '../supabase/supabaseClient'
 import Comment from './Comment'
 import { ensurePrefetch, getPrefetchedData, type PrefetchedData } from '../utils/prefetchCache'
+import type { Category, Link } from '../supabase/supabaseClient'
 
 type Props = {
   userId: string | null
@@ -127,15 +128,15 @@ export default function Home({ userId }: Props) {
           .limit(10)
         let latestList: LatestEntry[] = []
         if (latestRaw && latestRaw.length > 0) {
-          const catIds = Array.from(new Set(latestRaw.map(item => item.category_id))).filter((id): id is number => typeof id === 'number')
+          const catIds = Array.from(new Set(latestRaw.map((item: Link) => item.category_id))).filter((id): id is number => typeof id === 'number')
           let catMap = new Map<number, string>()
           if (catIds.length > 0) {
             const { data: catRows } = await supabase.from('categories').select('id,name').in('id', catIds)
             if (catRows) {
-              catMap = new Map(catRows.map(row => [row.id, row.name]))
+              catMap = new Map(catRows.map((row: Category) => [row.id, row.name]))
             }
           }
-          latestList = latestRaw.map(item => ({
+          latestList = latestRaw.map((item: Link) => ({
             id: item.id,
             title: item.title,
             url: item.url,

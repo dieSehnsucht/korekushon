@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { supabase, buildCommentsFilter, isAdmin, type Comment as CommentRow } from '../supabase/supabaseClient'
 import '../styles/Comment.css'
+import type { User } from '@supabase/supabase-js'
 
 type Props = {
 	categoryId: number | null
@@ -90,7 +91,7 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 		}
 		load(initialComments === undefined)
 		// capture current user email for admin check and cache user info
-		supabase.auth.getUser().then(({ data }) => {
+		supabase.auth.getUser().then(({ data }: { data: { user: User | null } }) => {
 			const user = data.user
 			setAdminEmail(user?.email)
 			if (user) {

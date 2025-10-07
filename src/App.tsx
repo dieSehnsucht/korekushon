@@ -8,6 +8,7 @@ import './styles/Sidebar.css'
 import './styles/Content.css'
 import './styles/Auth.css'
 import { ensurePrefetch } from './utils/prefetchCache'
+import type { AuthChangeEvent, Session } from '@supabase/supabase-js'
 
 function Footer() {
 	const [uptime, setUptime] = useState('')
@@ -51,7 +52,7 @@ export default function App() {
 	useEffect(() => {
 		let mounted = true
 		ensurePrefetch().catch((error) => console.error('prefetch failed', error))
-			supabase.auth.getSession().then(({ data }) => {
+			supabase.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
 			if (!mounted) return
 			const s = data.session
 			if (s?.user) {
@@ -59,7 +60,7 @@ export default function App() {
 			}
 		})
 
-			const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+			const { data: sub } = supabase.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
 				if (event === 'PASSWORD_RECOVERY') {
 					setRecovering(true)
 					setAuthOpen(true)

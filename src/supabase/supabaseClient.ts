@@ -37,6 +37,8 @@ export type Link = {
 	category_id: number
 	title: string
 	url: string
+	featured?: boolean
+	favorite_count?: number | null
 	created_at?: string
 }
 
@@ -113,12 +115,12 @@ export async function fetchCommentsOverview() {
 		}
 	}
 
-		// fetch recent comments (limit 10)
+		// fetch recent comments (limit 3)
 		const { data: recent, error: recentErr } = await supabase
 			.from('comments')
 			.select('*')
 			.order('id', { ascending: false })
-			.limit(10)
+			.limit(3)
 
 		if (recentErr) {
 			console.error('fetchCommentsOverview recent error:', recentErr)

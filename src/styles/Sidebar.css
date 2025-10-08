@@ -1,19 +1,147 @@
-/* Additional Sidebar tweaks - optional */
-.sidebar .add-btn{ background:#2b2b2b; color:#e8e8e8 }
-.sidebar h3{ margin: 0 0 8px 0 }
-.sidebar{ margin-left:10px; margin-right:10px }
-.sidebar-list li button{ background:#2b2b2b }
-.sidebar-list li button:hover { background:#2d5016; }
-.sidebar-list li button[title] { width: 24px; padding: 4px 3px; font-size: 20px; }
+.sidebar { 
+	/* two-tone: top header (green) and main body (dark) */
+	--sidebar-top-bg: #2fae8f; /* teal/green from reference image */
+	--sidebar-bg: #2b2b2b; /* main dark background */
+	--sidebar-separator: rgba(255,255,255,0.04);
+	padding: 20px 12px; 
+	height: 100%; 
+	box-sizing: border-box; 
+	margin-left: 0; 
+	margin-right: 0;
+	background: linear-gradient(to bottom, var(--sidebar-top-bg) 0 120px, var(--sidebar-bg) 120px 100%);
+	transition: background-color .25s ease, color .25s ease;
+}
+.sidebar h3 { margin: 0 0 12px 0; font-size: 1.4rem }
+.sidebar .add-btn { background: #2b2b2b; color: #d0d0d0; width: 36px; height: 36px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; padding:0 }
 
-/* icon in sidebar buttons */
-.sidebar-list .icon { margin-right:10px; vertical-align:middle; color: #e8e8e8; width:18px; height:18px }
-.sidebar-list button svg { display:inline-block; vertical-align:middle; width:18px; height:18px }
+[data-theme="light"] .sidebar .add-btn { background: #f5f7f6 !important; color: #0f3d33 !important; border: 1px solid #e6efea !important }
 
-/* Layout and spacing adjustments */
-.sidebar { padding: 20px 16px; height: 100%; box-sizing: border-box }
-.sidebar-header { display:flex; align-items:center; justify-content:space-between; padding-top:8px }
-.sidebar-list { list-style:none; padding:0; margin:12px 0 0 0; display:flex; flex-direction:column; gap:8px }
-.sidebar-list li button { width:100%; text-align:left; background:#2b2b2b; padding:8px 10px; border-radius:6px; font-size:0.95rem }
+/* ensure header text is readable on the green band */
+.sidebar .sidebar-header h3 { color: #e8f7f0 }
+
+.sidebar-list { list-style: none; padding: 0; margin: 8px 0 0 0; display: flex; flex-direction: column; gap: 10px }
+/* put a subtle separator under the header/top area so the list sits on the dark background */
+.sidebar-list { padding-top: 8px; border-top: 1px solid var(--sidebar-separator); margin-top: 16px }
+
+
+/* Main navigation buttons: either a direct child button (首页) or the first button inside the row div */
+.sidebar-list > li > button,
+.sidebar-list > li > div > button:first-child {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start; /* left align icon + label */
+	gap: 12px;
+	padding: 12px 16px;
+	border-radius: 10px;
+	font-size: 1.05rem;
+	color: #d0d0d0;
+	border: 1px solid transparent;
+	white-space: nowrap; /* prevent label wrapping */
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+[data-theme="light"] .sidebar-list li:last-child button { display:flex; align-items:center }
+.sidebar-list li:last-child svg.theme-icon { width:26px; height:26px }
+.sidebar-list li:last-child svg.theme-icon .icon-sun { transform-origin: center }
+[data-theme="light"] .sidebar-list li:last-child button span { color: #0f3d33 }
+.sidebar-list > li > button .icon,
+.sidebar-list > li > div > button:first-child .icon { color: inherit; margin-right: 12px }
+
+/* keep explicit dark background for active/hover states */
+.sidebar-list > li > button:hover,
+.sidebar-list > li > div > button:first-child:hover { background: rgba(255,255,255,0.03); color: #ffffff }
+.sidebar-list > li > button:hover,
+.sidebar-list > li > div > button:first-child:hover { background: rgba(255,255,255,0.03); color: #ffffff }
+
+/* icon sizes and spacing */
+.sidebar-list .icon { margin-right: 4px; color: inherit; width:26px; height:26px; display:inline-flex; align-items:center; justify-content:center; flex: 0 0 26px }
+.sidebar-list button svg { width:22px; height:22px; color: inherit; }
+
+/* Active/current category: full-row green background and green text/icon */
+.sidebar-list li.active > button,
+.sidebar-list li.active > div > button:first-child {
+	background: rgba(83,176,90,0.18);
+	color: #53b05a;
+	border-color: rgba(83,176,90,0.22);
+}
+.sidebar-list li.active > button .icon,
+.sidebar-list li.active > div > button:first-child .icon,
+.sidebar-list li.active > button svg,
+.sidebar-list li.active > div > button:first-child svg { color: #53b05a; fill: currentColor }
 
 .app-sidebar { padding-top: 0 } /* ensure sidebar covers from very top */
+
+/* Avatar/header area: ensure avatar sits visually inside the top green block */
+.sidebar .avatar-wrap {
+	margin: 0 0 8px 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 18px; /* push avatar down from very top */
+	padding-bottom: 8px;
+}
+
+.sidebar .avatar-wrap img { display:block; width:84px; height:84px; border-radius:10px; object-fit:cover; background:#1f1f1f; border:1px solid #2e2e2e }
+
+/* avatar sizing: SVG placeholder is 96x96, cap it on small screens */
+.sidebar .avatar-wrap svg { width: 84px; height: 84px; border-radius: 10px; display: block }
+
+/* Admin action buttons (rename/delete) inside the row: small square icon buttons */
+.sidebar-list li > div > button:not(:first-child) {
+	width: 40px;
+	height: 36px;
+	padding: 6px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	background: #2b2b2b;
+	color: #cfcfcf;
+	border: 1px solid transparent;
+	margin-left: 6px; /* separate from main button, slightly tighter */
+}
+.sidebar-list li > div > button:not(:first-child):hover { background: rgba(255,255,255,0.03) }
+
+/* light theme overrides */
+[data-theme="light"] .sidebar {
+	--sidebar-bg: #ffffff;
+	--sidebar-top-bg: #2fae8f;
+	color: #213547;
+	background: linear-gradient(to bottom, var(--sidebar-top-bg) 0 120px, var(--sidebar-bg) 120px 100%);
+}
+[data-theme="light"] .sidebar-list > li > button,
+[data-theme="light"] .sidebar-list > li > div > button:first-child { color: #213547 }
+
+/* light theme: buttons become light rounded cards */
+[data-theme="light"] .sidebar-list > li > button,
+[data-theme="light"] .sidebar-list > li > div > button:first-child {
+    background: #f7fbf7;
+    border: 1px solid #e7efe8;
+    color: #213547;
+}
+[data-theme="light"] .sidebar-list > li > button:hover,
+[data-theme="light"] .sidebar-list > li > div > button:first-child:hover {
+    background: #ecf9ee;
+}
+[data-theme="light"] .sidebar-list li.active > button,
+[data-theme="light"] .sidebar-list li.active > div > button:first-child {
+    background: rgba(98,199,167,0.18);
+    border-color: rgba(98,199,167,0.28);
+    color: #0b3b32;
+}
+[data-theme="light"] .sidebar-list .icon { color: #0f3d33 }
+
+[data-theme="light"] .sidebar .avatar-wrap { background: transparent }
+[data-theme="light"] .sidebar .avatar-wrap img { box-shadow: none }
+
+/* theme icon visibility: show sun on light, moon on dark */
+.sidebar svg.theme-icon .icon-sun { display: none }
+.sidebar svg.theme-icon .icon-moon { display: inline }
+[data-theme="light"] .sidebar svg.theme-icon .icon-sun { display: inline }
+[data-theme="light"] .sidebar svg.theme-icon .icon-moon { display: none }
+
+/* In light theme, the sun icon should match other icons (dark green) and not be placed on a green circle */
+[data-theme="light"] .sidebar svg.theme-icon .icon-sun { color: #0f3d33; fill: currentColor }
+[data-theme="light"] .sidebar svg.theme-icon .icon-moon { color: #0f3d33; fill: currentColor }

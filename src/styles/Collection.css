@@ -1,0 +1,64 @@
+/* Cleaned collection styles */
+.collection-wrap {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.collection-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.collection-tabs button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.collection-tabs button:hover { background: rgba(255,255,255,0.08); }
+.collection-tabs button.active { background: rgba(76,175,80,0.35); }
+
+.collection-body { display: flex; gap: 20px; align-items: flex-start; }
+.collection-body.empty, .collection-body.stacked { flex-direction: column; }
+
+.collection-items, .collection-recommend { background: rgba(255,255,255,0.02); border-radius: 12px; padding: 16px; }
+.collection-items { flex: 2 }
+.collection-recommend { flex: 1 }
+
+.collection-items ul, .collection-recommend ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px }
+
+.collection-items li, .collection-recommend li { display: flex; justify-content: space-between; align-items: center; }
+
+.collection-items li a { display: inline-block; width:100%; padding:10px 12px; border-radius:8px; background: rgba(255,255,255,0.03); transition: background .15s; color: var(--link-color) }
+.collection-items li a:hover { background: rgba(76,175,80,0.12); text-decoration: underline }
+
+.collection-empty-stack { display:flex; flex-direction:column; gap:16px }
+.collection-empty-card { width:100%; min-height:140px; border-radius:12px; border:1px dashed rgba(255,255,255,0.12); background: rgba(255,255,255,0.02); color:inherit; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; cursor:pointer; transition: border .2s, background .2s }
+.collection-empty-card:disabled { cursor:not-allowed; opacity:.5 }
+.collection-empty-card:hover:not(:disabled) { border-color: rgba(76,175,80,0.4); background: rgba(76,175,80,0.08) }
+.collection-empty-card .plus { font-size:28px; line-height:1 }
+
+.collection-recommend .recommend-label { font-size:12px; letter-spacing:.4px; margin-bottom:10px; text-transform:uppercase }
+.collection-recommend li { background: rgba(255,255,255,0.03); padding:8px 10px; border-radius:8px }
+
+.recommend-row { display:flex; align-items:center; justify-content:space-between; gap:12px }
+
+.favorite-toggle { display:inline-flex; align-items:center; gap:6px; background: transparent; border: none; color: inherit; cursor:pointer; padding:6px 8px; border-radius:8px }
+.favorite-toggle svg { transform: translateY(1px) }
+.favorite-toggle:hover { background: rgba(76,175,80,0.12) }
+.fav-count { font-size:13px; margin-left:4px }
+
+.muted { color: rgba(255,255,255,0.5) }
+
+/* Light theme tweaks */
+[data-theme="light"] .collection-recommend .recommend-label { color: #0f3d33; font-size: 14px; font-weight: 700; text-transform: none; margin-bottom: 8px }
+
+/* Accessibility */
+.favorite-toggle:focus { outline: 2px solid rgba(255,193,7,0.18); }

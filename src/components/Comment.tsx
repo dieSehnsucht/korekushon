@@ -172,25 +172,37 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 			appendComments(inserted)
 		}
 
+	const removeFromState = (id: number) => {
+		setComments(prev => {
+			// remove the comment and any children recursively
+			const idsToRemove = new Set<number>()
+			const collect = (cid: number) => {
+				idsToRemove.add(cid)
+				for (const c of prev) {
+					if (c.parent_id === cid) collect(c.id)
+				}
+			}
+			collect(id)
+			const filtered = prev.filter(c => !idsToRemove.has(c.id))
+			onCountChange?.(filtered.length)
+			return filtered
+		})
+	}
+
 	const del = async (id: number) => {
 		const ok = confirm('确认删除该评论？')
 		if (!ok) return
 		const { error } = await supabase.from('comments').delete().eq('id', id)
 		if (error) return alert(error.message)
+		// remove from local state
+		removeFromState(id)
 	}
 
 	const formatTime = (date: string | undefined) => {
 		if (!date) return '未知时间'
-		const now = new Date()
 		const commentDate = new Date(date)
-		const diffMs = now.getTime() - commentDate.getTime()
-		const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-		if (diffDays < 1) return '今天'
-		if (diffDays < 30) return `${diffDays} 天前`
-		const diffMonths = Math.floor(diffDays / 30)
-		if (diffMonths < 12) return `${diffMonths} 个月前`
-		const diffYears = Math.floor(diffMonths / 12)
-		return `${diffYears} 年前`
+		if (Number.isNaN(commentDate.getTime())) return date
+		return commentDate.toLocaleString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
 	}
 
 	const renderNode = (node: CommentTreeNode) => {
@@ -204,7 +216,21 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 						<div className="body-col">
 							<div className="body-header">
 								<span className="author">{node.author_name ?? '匿名'}</span>
-								<span className="time">{formatTime(node.created_at)}</span>
+								<div className="meta-actions">
+									<span className="time">{formatTime(node.created_at)}</span>
+									<div className="meta-buttons">
+										{canReply && (
+											<button className="reply" onClick={() => toggleReply(node.id)} title={isReplyOpen ? '取消回复' : '回复'}>
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+											</button>
+										)}
+										{(admin || activeUserId === node.author_id) && (
+											<button className="delete" onClick={() => del(node.id)} title="删除">
+												<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+											</button>
+										)}
+									</div>
+								</div>
 							</div>
 							<div className="content">{node.content}</div>
 						</div>
@@ -213,12 +239,14 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 					{showToolbar && (
 						<div className="comment-toolbar">
 							{canReply && (
-								<button className="reply" onClick={() => toggleReply(node.id)}>
-									{isReplyOpen ? '取消回复' : '回复'}
+								<button className="reply" onClick={() => toggleReply(node.id)} title={isReplyOpen ? '取消回复' : '回复'}>
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
 								</button>
 							)}
-							{admin && (
-								<button className="delete" onClick={() => del(node.id)}>删除</button>
+							{(admin || activeUserId === node.author_id) && (
+								<button className="delete" onClick={() => del(node.id)} title="删除">
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></svg>
+								</button>
 							)}
 						</div>
 					)}
@@ -231,7 +259,9 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 							placeholder={`回复 ${node.author_name ?? '匿名'}…`}
 						/>
 						<div className="reply-actions">
-							<button onClick={() => submitReply(node)}>发送回复</button>
+							<button onClick={() => submitReply(node)} title="发送回复">
+								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+							</button>
 						</div>
 					</div>
 				)}
@@ -250,7 +280,9 @@ export default function Comment({ categoryId, linkId, userId, open = false, onCo
 				<div className="comment-panel">
 					<div className="comment-input">
 						<textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="说点什么…" />
-						<button onClick={submit}>发表</button>
+						<button onClick={submit} title="发表">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
+						</button>
 					</div>
 					{!initialLoadComplete ? (
 						<div className="comment-loading">

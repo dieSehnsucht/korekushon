@@ -1,19 +1,33 @@
 /* Additional Content tweaks - optional */
 .links-list a{ color:#6fcf6f }
-.links-list a:hover{ color:#52b152 }
+.links-list a:hover{ /* keep color but apply subtle white overlay on surrounding controls */ color:#6fcf6f; text-decoration:underline }
 
 /* Add link form */
 .add-link-form { display:flex; gap:8px; align-items:flex-end; margin-bottom:12px; padding:12px; background:#2b2b2b; border-radius:6px; }
-.add-link-form input { flex:1; background:#1f1f1f; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:4px; padding:8px; }
-.add-link-form input:focus { outline:2px solid #52b152; }
-.add-link-form button { background:#6fcf6f; color:#fff; border:none; padding:8px 12px; border-radius:4px; cursor:pointer; }
-.add-link-form button:hover { background:#52b152; }
+.add-link-form input { flex:1; background:#1f1f1f; color:#e8e8e8; border:none; border-radius:4px; padding:8px; }
+.add-link-form input:focus { outline: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.02) inset; }
+.add-link-form button { background:#6fcf6f; color:#fff; border:none; border-radius:4px; cursor:pointer; width:32px; height:32px; display:flex; align-items:center; justify-content:center; }
+.add-link-form button:hover { background: rgba(255,255,255,0.04); color:#fff }
 .add-link-form button:last-child { background:#3a3a3a; }
 .add-link-form button:last-child:hover { background:#4a4a4a; }
 
 /* Comment toggle */
-.comment-toggle { background:#2b2b2b; color:#e8e8e8; border:1px solid #3a3a3a; border-radius:4px; padding:4px 8px; cursor:pointer; }
+.comment-toggle { background:#2b2b2b; color:white; border:none; border-radius:4px; padding:4px; cursor:pointer; display:flex; align-items:center; gap:6px; }
+.comment-toggle .comment-count { font-size:0.85rem; color: #e8e8e8; }
 .comment-toggle:hover { background:#3a3a3a; }
+
+/* Light theme: make comment toggle and small action buttons light */
+[data-theme="light"] .comment-toggle { background: #f5f7f6; color: #0f3d33; border: 1px solid #e6efea }
+[data-theme="light"] .comment-toggle .comment-count { color: #0f3d33 }
+[data-theme="light"] .link-row .admin-btn, [data-theme="light"] .sidebar-list li > div > button:not(:first-child) { background: #f5f7f6; color:#0f3d33; border: 1px solid #e6efea }
 
 .link-row { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
 .link-item .link-meta { margin-left:22px; margin-top:2px; display:block; font-size:0.75rem; }
+.link-item .link-date { color:var(--muted); font-size:12px }
+
+.category-featured-block { margin-bottom:16px; padding:0; background:transparent; border:none }
+.category-featured-block h3 { margin-top:0; margin-bottom:2px; }
+.category-featured-block ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.category-featured-block li { padding:0; }
+.category-featured-block li a { color:#6fcf6f; text-decoration:none; font-weight:600 }
+.category-featured-block li a:hover { text-decoration:underline }
